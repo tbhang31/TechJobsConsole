@@ -49,13 +49,34 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
+                if (aValue.ToLower().Contains(value.ToLower()))
                 {
                     jobs.Add(row);
                 }
             }
 
             return jobs;
+        }
+
+        public static List<Dictionary<string, string>> FindByValue(string value)
+        {
+            LoadData();
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>(); //Its going to iteratre through each column of the column choices
+            foreach (Dictionary<string, string> job in AllJobs)
+            {
+                foreach (KeyValuePair<string, string> row in job)
+                {
+                    if (row.Value.ToLower().Contains(value.ToLower()))//Its going to look at the values to see whether or not a column contains the specific value
+                    {
+                        if (!jobs.Contains(job)) //checks to see if the jobs list already contains the entry
+                        {
+                            jobs.Add(job);//adds the job entry to the separate jobs list dictionary
+                        }
+
+                    }
+                }
+            }
+            return jobs; //It returns the entire job list containing dictionaries that contain the searched value
         }
 
         /*
